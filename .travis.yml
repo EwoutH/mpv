@@ -73,13 +73,6 @@ env:
     # Travis token for mpv.io
     - secure: "nlTVLJK6kRhtXvhKCoJ3YdFGHuKaq/eHowfPw25hqRWuBOZd+HjHY5KIYjV7SxuKFDpJE4GpNcvA3Q31nsqomxpkLYgrwjg6TSazN7ZP+x85ZgV1QGFebrPfGm2n5UR5CAPAwFoeF3pZheLi4bajVzwq1fWW+x3grS188P9OZso="
 
-branches:
-  only:
-    - master
-    - ci
-    - coverity_scan
-    - /release\/.*$/
-
 before_install:
   - if [ "$TRAVIS_COMPILER" = "clang" ]; then export CXX="clang++"; fi
   - if [ "$TRAVIS_COMPILER" = "gcc" ]; then export CXX="g++"; fi
