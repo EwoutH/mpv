@@ -34,11 +34,13 @@ _mingwbase:
 matrix:
   include:
     - <<: *mac
-      osx_image: xcode11.6
+      osx_image: xcode12.2
     - <<: *mac
-      osx_image: xcode10.1
+      osx_image: xcode11.7
     - <<: *mac
-      osx_image: xcode9.2
+      osx_image: xcode10.3
+    - <<: *mac
+      osx_image: xcode9.3 # latest image schipped with JDK	1.8.0 in Travis CI
       env:
         - HOMEBREW_NO_AUTO_UPDATE=1
         - HOMEBREW_NO_INSTALL_CLEANUP=1
@@ -57,7 +59,7 @@ matrix:
       env: CI_SCRIPT=ci/build-mingw64.sh TARGET=x86_64-w64-mingw32
   allow_failures:
     - os: osx
-      osx_image: xcode9.2
+      osx_image: xcode9.3
   fast_finish: true
 
 dist: focal
@@ -124,17 +126,17 @@ before_install:
             for formula in ${keep[@]}; do remove=("${remove[@]/$formula}"); done
             for formula in ${install[@]}; do remove=("${remove[@]/$formula}"); done
             brew remove --force $remove --ignore-dependencies
-            if [[ "$TRAVIS_OSX_IMAGE" == "xcode9.2" ]]; then
+            if [[ "$TRAVIS_OSX_IMAGE" == "xcode9.3" ]]; then
                 brew untap caskroom/cask
             fi
             brew update
-            if [[ "$TRAVIS_OSX_IMAGE" == "xcode9.2" ]]; then
+            if [[ "$TRAVIS_OSX_IMAGE" == "xcode9.3" ]]; then
                 pushd "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core"
                 git checkout --force 55e02323812604add9a69bab8730319b9255a697
             fi
             brew install $install
             brew link --overwrite python
-            if [[ "$TRAVIS_OSX_IMAGE" == "xcode9.2" ]]; then
+            if [[ "$TRAVIS_OSX_IMAGE" == "xcode9.3" ]]; then
                 git checkout master
                 popd
             fi
